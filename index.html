@@ -1,0 +1,114 @@
+<html>
+	<head>
+		<title>To-Do List</title>
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+		<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Modak&display=swap" rel="stylesheet">
+
+	<style>
+		body{
+			font-family: 'Do Hyeon', sans-serif;
+			background-image: url(https://images.unsplash.com/photo-1525706732602-52592370085e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80);
+			background-size:cover;
+			font-size:25px;
+			color:ee6c4d;
+		}
+		h1{
+			font-size:150px;
+			color:1d3557;
+			text-align:center;
+			text-decoration:underline;
+		}
+		h2{
+			text-align:center;
+			font-size:85px;
+			color:1d3557;
+			text-decoration:underline;
+		}
+		#new {
+			text-align:center;
+			width:300px;
+			font-size:29px;
+		}
+		#SaveButton {
+			font-size:25px;
+			margin-top: -8px;
+		}
+		#ClearList {
+			font-size:25px;
+		}
+		.section{
+			text-align:center;
+			padding:10px;
+		}
+		
+	</style>
+	</head>
+		
+		<body>
+		<h1 style="font-family: 'Modak', cursive;"> My To-Do List</h1>
+		<div class="section">
+			<input type="text" id="new" placeholder="NewTask">
+			<button id="SaveButton" class="btn btn-outline-success" onClick="addNew();">Save Task</button>
+			<br><br><br><br>
+			<h2> Current To-Do List</h2>
+			<ul style="text-align:center; list-style-position:inside;" id="tasks">
+			</ul>
+			<button id="ClearList" class="btn btn-outline-danger" onClick="clearAll();">Clear List</button>
+		</div>
+
+
+
+			<script>
+		
+		function init() {
+			let list = document.getElementById("tasks");
+			list.onclick = update;
+		}
+
+		
+		function addNew() {
+			let newTask = document.getElementById("new");
+
+			if(newTask.value !="") {
+				let list = document.getElementById("tasks");
+				let li = document.createElement("li");
+				li.innerHTML = `<span class="delete">&times;</span><input type="checkbox" class="done"> <label>${newTask.value}</label>`;
+			list.appendChild(li);
+			}
+			
+
+			newTask.value = null;
+		}
+
+		function update(event) {
+			if (event.target.className == "delete") {
+				let task = event.target.parentNode;
+				let list = task.parentNode;
+				list.removeChild(task);
+			}
+
+			if (event.target.className == "done") {
+				let checkbox = event.target;
+				let task = checkbox.nextSibling.nextSibling;
+				if (checkbox.checked) {
+					task.style.textDecoration = "line-through";
+				}
+				else {
+					task.style.textDecoration = "none";
+				}
+			}
+		}
+
+		
+		function clearAll() {
+			let list = document.getElementById("tasks");
+			list.innerHTML = null;
+		}
+
+		init();
+
+			</script>
+		</body>
+</html>
